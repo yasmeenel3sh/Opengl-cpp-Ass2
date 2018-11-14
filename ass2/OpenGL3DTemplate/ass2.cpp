@@ -363,19 +363,19 @@ void drawLivingRoom(){
 
 	//tvstorage
 	glPushMatrix();
-	glTranslated(0.035, 0.75, 1);
+	glTranslated(0.025, 0.75, 1);
 	glRotated(90, 0, 1, 0);
 	drawTVStorage();
 	glPopMatrix();
 
 	glPushMatrix();
-	glTranslated(0.035, 0.64, 1.11);
+	glTranslated(0.025, 0.64, 1.11);
 	glRotated(90, 0, 1, 0);
 	drawTVStorage();
 	glPopMatrix();
 
 	glPushMatrix();
-	glTranslated(0.035, 0.53, 1.22);
+	glTranslated(0.025, 0.53, 1.22);
 	glRotated(90, 0, 1, 0);
 	drawTVStorage();
 	glPopMatrix();
@@ -644,6 +644,29 @@ void drawBedRoom(){
 	
 }
 
+void drawGhost(){
+	glPushMatrix();
+	//body
+	glPushMatrix();
+	glutSolidSphere(0.15, 15, 15);
+	glPopMatrix();
+
+	//head 
+	glPushMatrix();
+	glTranslated(0, 0.19, 0);
+	glutSolidSphere(0.07,15,15);
+	glPopMatrix();
+
+	//nose
+	glColor3f(1, 0.5, 0.2);
+	glPushMatrix();
+	glTranslated(0, 0.2, 0.05);
+	glutSolidCone(0.015, 0.1, 15,15);
+	glPopMatrix();
+
+	glPopMatrix();
+}
+
 void Display(){
 	setupLights();
 	setupCamera();
@@ -651,6 +674,10 @@ void Display(){
 
 	drawLivingRoom();
 	drawBedRoom();
+	glPushMatrix();
+	glTranslated(-1, 0.5, 0.5);
+	drawGhost();
+	glPopMatrix();
 	glFlush();
 
 }
