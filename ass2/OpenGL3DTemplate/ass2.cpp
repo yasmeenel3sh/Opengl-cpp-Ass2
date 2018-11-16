@@ -6,6 +6,62 @@
 #define GLUT_KEY_ESCAPE 27
 #define DEG2RAD(a) (a * 0.0174532925)
 
+bool animateBedRoom = false;
+bool animateLivingRoom = false;
+//colors
+double backRed = 0;
+double backGreen = 0;
+double backBlue = 0.5;
+
+int redD = 1;
+int greenD = 1;
+int blueD = 1;
+//___________________________//
+//living room animation values
+double animLivingRoomval = 0.05;
+double animLivingRoompos = 0;
+ //large couch
+double LargeCouchanimpos = 0;
+double LargeCouchanimval = 0;
+ //small couch
+double SmallCouchanimpos = 0;
+double SmallCouchanimval = 0;
+ //chair
+double livingchairanimepos = 0;
+double livingchairanimval = 0;
+//table
+double tableanimpos = 0;
+double tableanimval = 0;
+//tv table
+double tvtableanimpos = 0;
+double tvtableanimval = 0;
+//Tv
+double TVanimpos = 0;
+double TVanimval = 0;
+//TVStorage
+double TVStoragepos = 0;
+double TVStorageval = 0;
+//__________________________//
+//bedroom animation values
+double animBedRoomVal = 0.05;
+double animBedRoomRot = 0;
+int maxheight = 1;
+ //desk
+double deskanimpos = 0;
+double deskanimval = 0.01;
+ //bed
+double bedanimpos = 0;
+double bedanimval = 0.01;
+ //lamp
+double lampanimpos = 0;
+double lampanimval = 0.01;
+ //comode
+double comodeanimpos = 0;
+double comodeanimval = 0.01;
+ //cupboard
+double cupboardanimpos = 0;
+double cupboardanimval = 0.01;
+
 class Vector3f {
 public:
 	float x, y, z;
@@ -324,15 +380,19 @@ void drawLivingRoom(){
 	Vector3f right = Vector3f(1, 0.9, 0.6);
 	Vector3f front = Vector3f(1, 0.9,0.6);
 	Vector3f floor = Vector3f(0.7, 0.4, 0.2);
+	glPushMatrix();
+	glTranslated(0, animLivingRoompos, 0);
 	drawRoom(left,right,front,floor);
 	//large couch
 	glPushMatrix();
+	glTranslated(0, LargeCouchanimpos, 0);
 	glTranslated(0.9, 0,0);
 	drawCouch();
 	glPopMatrix();
 
 	//small couch
 	glPushMatrix();
+	glTranslated(SmallCouchanimpos, 0, 0);
 	glTranslated(1.975, 0, 0.8);
 	glRotated(-90, 0, 1, 0);
 	glScaled(0.55, 1, 1);
@@ -341,6 +401,7 @@ void drawLivingRoom(){
 
 	//chair
 	glPushMatrix();
+	glTranslated(0, livingchairanimepos, 0);
 	glTranslated(1.975, 0, 1.7);
 	glRotated(-90, 0, 1, 0);
 	glScaled(0.25, 1, 1);
@@ -349,6 +410,7 @@ void drawLivingRoom(){
 
 	//table
 	glPushMatrix();
+	glTranslated(0, tableanimpos ,0);
 	glTranslated(1.85, 0.0, 1.325);
 	glRotated(90, 0, 1, 0);
 	drawTable(0.2, 0.02, 0.02, 0.1);
@@ -356,12 +418,15 @@ void drawLivingRoom(){
 
 	//tvtable
 	glPushMatrix();
+	glTranslated(tvtableanimpos, 0, 0);
 	glTranslated(0.15, 0.15, 1.2);
 	glRotated(90, 0, 1, 0);
 	drawTVTable();
 	glPopMatrix();
 
 	//tvstorage
+	glPushMatrix();
+	glTranslated(0, 0, TVStoragepos);
 	glPushMatrix();
 	glTranslated(0.025, 0.75, 1);
 	glRotated(90, 0, 1, 0);
@@ -379,22 +444,26 @@ void drawLivingRoom(){
 	glRotated(90, 0, 1, 0);
 	drawTVStorage();
 	glPopMatrix();
-
+	glPopMatrix();
 	//TV
+	glTranslated(0, TVanimpos, 0);
 	drawTV();
+
+	glPopMatrix();
 }
 
 void drawBed(){
 	glPushMatrix();
 
 	//base
+	glColor3f(0.47, 0.37, 0.30);
 	glPushMatrix();
 	glScaled(0.9, 0.15, 1);
 	glutSolidCube(1);
 	glPopMatrix();
 
 	//matress
-	glColor3f(0, 0, 0);
+	glColor3f(1, 0.9, 0.6);
 	glPushMatrix();
 	glTranslated(0, 0.125, 0);
 	glScaled(0.8, 0.10, 0.95);
@@ -423,27 +492,28 @@ void drawCupBoard(){
 	glPushMatrix();
 
 	//skeleton
+	glColor3f(0.47, 0.37, 0.30);
 	glPushMatrix();
 	glScaled(0.2, 0.9, 0.9);
 	glutSolidCube(1);
 	glPopMatrix();
 
 	//firstlayer
-	glColor3f(0, 0, 0);
+	glColor3f(1, 1, 1);
 	glPushMatrix();
 	glTranslated(0.01, 0, 0.3);
 	glScaled(0.2, 0.8, 0.25);
 	glutSolidCube(1);
 	glPopMatrix();
 
-	glColor3f(0, 0, 0);
+	glColor3f(1, 1, 1);
 	glPushMatrix();
 	glTranslated(0.01, 0, 0);
 	glScaled(0.2, 0.8, 0.25);
 	glutSolidCube(1);
 	glPopMatrix();
 
-	glColor3f(0, 0, 0);
+	glColor3f(1, 1, 1);
 	glPushMatrix();
 	glTranslated(0.01, 0, -0.3);
 	glScaled(0.2, 0.8, 0.25);
@@ -459,6 +529,7 @@ void drawComode(){
 	glPushMatrix();
 
 	//sekelton
+	glColor3f(0.47, 0.37, 0.30);
 	glPushMatrix();
 	glScaled(0.25, 0.25, 0.25);
 	glutSolidCube(1);
@@ -519,6 +590,8 @@ void drawChairBedRoom(){
 	glPopMatrix();
 
 	//back
+	glColor3f(1, 1, 1);
+
 	glPushMatrix();
 	glTranslated(0, 0.18, -0.07);
 	glScaled(0.15, 0.15, 0.01);
@@ -532,7 +605,8 @@ void drawDesk(){
 	glPushMatrix();
 
 	//top
-	glColor3f(0, 0, 0);
+	glColor3f(0.47, 0.37, 0.30);
+
 	glPushMatrix();
 	glScaled(0.3, 0.1, 0.4);
 	glutSolidCube(1);
@@ -554,7 +628,8 @@ void drawDesk(){
 	glPopMatrix();
 	
 	//right leg
-	glColor3f(0, 0,1);
+	glColor3f(0.47, 0.37, 0.30);
+
 	glPushMatrix();
 	glTranslated(0, -0.125, 0.122);
 	glScaled(0.3, 0.25, 0.15);
@@ -578,6 +653,8 @@ void drawDesk(){
 	glPopMatrix();
 
 	//leftleg
+	glColor3f(0.47, 0.37, 0.30);
+
      glPushMatrix();
 	 glTranslated(0, -0.125, -0.2);
 	 glScaled(0.3, 0.25, 0.02);
@@ -595,24 +672,33 @@ void drawBedRoom(){
 	Vector3f right = Vector3f(1, 0.9, 0.5);
 	Vector3f front = Vector3f(0.8, 0, 0.1);
 	Vector3f floor = Vector3f(1, 0.9, 0.5);
+	
 	glPushMatrix();
+	
+		
+	glTranslated(-0.81, 0, 0);
 
 	glPushMatrix();
 	glTranslated(-2.02, 0, 0);
 	drawRoom(left,right,front,floor);
 	glPopMatrix();
-
+	//bed
 	glPushMatrix();
+	glTranslated(0, bedanimpos, 0);
 	glTranslated(-0.5, 0.075, 0.5);
 	drawBed();
 	glPopMatrix();
 	
+	//cardboard
 	glPushMatrix();
+	glTranslated( cupboardanimpos,0, 0);
 	glTranslated(-1.92, 0.45, 0.55);
 	drawCupBoard();
 	glPopMatrix();
+	
 	//draw chair
 	glPushMatrix();
+	glTranslated(0, deskanimpos, 0);
 	glTranslated(-0.4, 0.025, 1.4);
 	glRotated(90, 0, 1, 0);
 	drawChairBedRoom();
@@ -622,12 +708,14 @@ void drawBedRoom(){
 
 	//comode
 	glPushMatrix();
+	glTranslated(0, 0, comodeanimpos);
 	glTranslated(-1.1, 0.125, 0.125);
 	drawComode();
 	glPopMatrix();
 	
 	//drawLamp
 	glPushMatrix();
+	glTranslated(0, lampanimpos, 0);
 	glTranslated(-1.1, 0.25, 0.125);
 	drawLamp();
 	glPopMatrix();
@@ -635,7 +723,8 @@ void drawBedRoom(){
 
 	//desk
 	glPushMatrix();
-	glTranslated(-0.155, 0.27, 1.5);
+	glTranslated(0, deskanimpos, 0);
+	glTranslated(-0.18, 0.27, 1.5);
 	//glTranslated(-1, 1, 1);
 	drawDesk();
 	glPopMatrix();
@@ -664,6 +753,20 @@ void drawGhost(){
 	glutSolidCone(0.015, 0.1, 15,15);
 	glPopMatrix();
 
+	//righteye
+	glColor3f(0, 0, 0);
+	glPushMatrix();
+	glTranslated(0.02, 0.22, 0.052);
+	glutSolidSphere(0.01,15,15);
+	glPopMatrix();
+
+	//lefteye
+	glColor3f(0, 0, 0);
+	glPushMatrix();
+	glTranslated(-0.02, 0.22, 0.052);
+	glutSolidSphere(0.01, 15, 15);
+	glPopMatrix();
+
 	glPopMatrix();
 }
 
@@ -673,11 +776,18 @@ void Display(){
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	drawLivingRoom();
-	drawBedRoom();
+	
 	glPushMatrix();
+	glTranslated(-2.83, 0.01, 0);
+	glRotated(animBedRoomRot, 0,  1,0);
+	glTranslated(2.83, -0.01, 0);
+	drawBedRoom();
+	glPopMatrix();
+
+	/*glPushMatrix();
 	glTranslated(-1, 0.5, 0.5);
 	drawGhost();
-	glPopMatrix();
+	glPopMatrix();*/
 	glFlush();
 
 }
@@ -703,7 +813,12 @@ void Keyboard(unsigned char key, int x, int y) {
 	case 'e':
 		camera.moveZ(-d);
 		break;
-
+	case 'l':
+		animateBedRoom = animateBedRoom ? false : true;
+		break;
+	case 'r':
+		animateLivingRoom = animateLivingRoom ? false : true;
+		break;
 	case GLUT_KEY_ESCAPE:
 		exit(EXIT_SUCCESS);
 	}
@@ -733,6 +848,99 @@ void Special(int key, int x, int y) {
 
 }
 
+void animateDesk(){
+	if (deskanimpos <= 0)
+		deskanimval = 0.01;
+	else if (deskanimpos >= maxheight)
+		deskanimval =-0.01;
+	deskanimpos += deskanimval;
+}
+
+void animateBed(){
+	if (bedanimpos <= 0)
+		bedanimval = 0.001;
+	else if (bedanimpos >= maxheight)
+		bedanimval = -0.001;
+	bedanimpos += bedanimval;
+}
+void animateLamp(){
+	if (lampanimpos <= 0)
+		lampanimval = 0.07;
+	else if (lampanimpos >= maxheight)
+		lampanimval = -0.07;
+	lampanimpos += lampanimval;
+}
+void animatecomode(){
+	if (comodeanimpos <= 0)
+		comodeanimval = 0.007;
+	else if (comodeanimpos >= maxheight)
+		comodeanimval = -0.005;
+	comodeanimpos += comodeanimval;
+}
+void animateCupBoard(){
+	if (cupboardanimpos <= 0)
+		cupboardanimval = 0.0007;
+	else if (cupboardanimpos >= maxheight-0.5)
+		cupboardanimval = -0.0005;
+	cupboardanimpos += cupboardanimval;
+}
+void animateBedRoomfunc(){
+	if (animateBedRoom){
+		//animate room
+		if (animBedRoomRot >= 45)
+			animBedRoomVal = -0.05;
+		else
+			if (animBedRoomRot <= -45)
+				animBedRoomVal = 0.05;
+		animBedRoomRot += animBedRoomVal;
+        //animate desk
+		animateDesk();
+		//bed
+		animateBed();
+		//lamp
+		animateLamp();
+		//comode
+		animatecomode();
+		//cupboard
+		animateCupBoard();
+	}
+}
+void animateLargeCouch(){
+	if (LargeCouchanimpos <= 0)
+		LargeCouchanimval = 0.0007;
+	else if (LargeCouchanimpos >= maxheight - 0.5)
+		LargeCouchanimval = -0.0005;
+	LargeCouchanimpos += LargeCouchanimval;
+}
+void animateSmallCouch(){
+		if (SmallCouchanimpos >= 0)
+		SmallCouchanimval = -0.0007;
+	else if (SmallCouchanimpos <= - 0.5)
+		SmallCouchanimval = 0.0005;
+	SmallCouchanimpos += SmallCouchanimval;
+}
+void animateLivingChair(){
+
+}
+void animateLivingRoomFunc(){
+	if (animateLivingRoom){
+		if (animLivingRoompos >= 0)
+			animLivingRoomval = -0.001;
+		else if (animLivingRoompos <= -maxheight)
+			animLivingRoomval= 0.001;
+		animLivingRoompos += animLivingRoomval;
+
+		animateLargeCouch();
+
+		animateSmallCouch();
+	}
+}
+void Anim(){
+	animateLivingRoomFunc();
+	animateBedRoomfunc();
+	glutPostRedisplay();
+
+}
 void main(int argc, char** argv) {
 	glutInit(&argc, argv);
 
@@ -743,7 +951,7 @@ void main(int argc, char** argv) {
 	glutDisplayFunc(Display);
 	glutKeyboardFunc(Keyboard);
 	glutSpecialFunc(Special);
-
+	glutIdleFunc(Anim);
 	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB | GLUT_DEPTH);
 	glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
 

@@ -1,4 +1,4 @@
-﻿Build started 13/11/2018 09:57:05.
+﻿Build started 16/11/2018 15:28:27.
      1>Project "C:\Users\yasme\Desktop\Opengl-cpp-Ass2\ass2\OpenGL3DTemplate\OpenGL3DTemplate.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 2013\VC\bin\CL.exe /c /I"C:\Users\yasme\Desktop\Opengl-cpp-Ass2\ass2\OpenGL3DTemplate\Debug\\.." /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt ass2.cpp
@@ -11,4 +11,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.04
+Time Elapsed 00:00:00.63
