@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <glut.h>
+#include <iostream>
+#include <windows.h>
 
 #include <string>
 
@@ -1050,13 +1052,24 @@ void Keyboard(unsigned char key, int x, int y) {
 		break;
 	case 'l':
 		animateBedRoom = animateBedRoom ? false : true;
-		if (!animateBedRoom)
+		if (!animateBedRoom){
 			resetBedroomPositions();
+			mciSendString(TEXT("stop Audio/left.mp3 "), NULL, 0, NULL);
+
+		}
+		else{
+			mciSendString(TEXT("play Audio/left.mp3 repeat"), NULL, 0, NULL);
+		}
 		break;
 	case 'r':
 		animateLivingRoom = animateLivingRoom ? false : true;
-		if (!animateLivingRoom)
+		if (!animateLivingRoom){
 			resetLivingroomPostions();
+			mciSendString(TEXT("stop Audio/right.mp3 "), NULL, 0, NULL);
+		}
+		else{
+			mciSendString(TEXT("play Audio/right.mp3 repeat"), NULL, 0, NULL);
+		}
 		break;
 	case 'c':
 		changeColor = true;
